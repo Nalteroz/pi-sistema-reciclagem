@@ -1,7 +1,7 @@
 from ..data import system_db
 from .basic import BaseModel, StorageHistoryTypeEnum
 
-class StorageHistoryModel(BaseModel):
+class StorageTransactionModel(BaseModel):
     __tablename__ = 'storage_history'
     __table_args__ = {"schema": "operation"}
 

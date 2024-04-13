@@ -1,12 +1,10 @@
 from flask import jsonify 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask_jwt_extended import jwt_required, create_access_token, current_user
-
-from bcrypt import hashpw, gensalt, checkpw
+from flask_jwt_extended import jwt_required, current_user
 
 from resources.data import system_db
-from resources.models import CollaboratorModel, CollaboratorSchema, UserRoleEnum 
+from resources.models import TransactionModel, CollaboratorSchema, UserRoleEnum 
 
 CollaboratorBlueprint = Blueprint('collaborator', __name__, url_prefix='/collaborator')
 
@@ -24,7 +22,7 @@ class RootCollaboratorMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get collaborators information.')
 
-        collaborators = CollaboratorModel.query.all()
+        collaborators = TransactionModel.query.all()
         return collaborators
 
     @jwt_required()
@@ -42,10 +40,10 @@ class RootCollaboratorMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get collaborators information.')
 
-        if CollaboratorModel.query.filter_by(name=new_collaborator['name'], surname = new_collaborator['surname']).first():
+        if TransactionModel.query.filter_by(name=new_collaborator['name'], surname = new_collaborator['surname']).first():
             abort(409, message='Collaborator already exists. If you want to reactivate and you are an admin, update the collaborator instead.')
 
-        collaborator = CollaboratorModel(**new_collaborator) 
+        collaborator = TransactionModel(**new_collaborator) 
 
         system_db.session.add(collaborator)
         system_db.session.commit()
@@ -67,7 +65,7 @@ class SingleCollaboratorMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get collaborators information.')
 
-        collaborator = CollaboratorModel.query.get(collaborator_id)
+        collaborator = TransactionModel.query.get(collaborator_id)
         if not collaborator:
             abort(404, message='Collaborator not found.')
 
@@ -88,7 +86,7 @@ class SingleCollaboratorMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get collaborators information.')
 
-        dbcollaborator = CollaboratorModel.query.get(collaborator_id)
+        dbcollaborator = TransactionModel.query.get(collaborator_id)
         if not dbcollaborator:
             abort(404, message='Collaborator not found.')
 
@@ -122,7 +120,7 @@ class SingleCollaboratorMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get collaborators information.')
 
-        dbcollaborator = CollaboratorModel.query.get(collaborator_id)
+        dbcollaborator = TransactionModel.query.get(collaborator_id)
         if not dbcollaborator:
             abort(404, message='Collaborator not found.')
 

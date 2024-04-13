@@ -1,7 +1,7 @@
 from ..data import system_db
 from .basic import BaseModel
 
-class MaterialModel(BaseModel):
+class StorageHistoryModel(BaseModel):
     __tablename__ = 'material'
     __table_args__ = {"schema": "operation"}
 

@@ -1,7 +1,7 @@
 from ..data import system_db
 from .basic import BaseModel, CollaboratorRoleEnum
 
-class CollaboratorModel(BaseModel):
+class TransactionModel(BaseModel):
     __tablename__ = 'collaborator'
     __table_args__ = {"schema": "operation"}
 

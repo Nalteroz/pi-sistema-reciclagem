@@ -68,7 +68,16 @@ def create_app():
 
     # Blueprint registration
     api.register_blueprint(bp.IndexBlueprint)
+    api.register_blueprint(bp.ClientBlueprint)
     api.register_blueprint(bp.CollaboratorBlueprint)
+    api.register_blueprint(bp.MaterialBlueprint)
+    api.register_blueprint(bp.MaterialCollectSiteBlueprint)
+    api.register_blueprint(bp.MaterialCollectionBlueprint)
+    api.register_blueprint(bp.MaterialTriageBlueprint)
+    api.register_blueprint(bp.StorageHistoryBlueprint)
+    api.register_blueprint(bp.StorageTransactionBlueprint)
+    api.register_blueprint(bp.TransactionBlueprint)
+    api.register_blueprint(bp.TruckBlueprint)
     api.register_blueprint(bp.UserBlueprint)
 
     return app
