@@ -37,6 +37,8 @@ def create_app():
     app.config['OPENAPI_URL_PREFIX'] = '/docs'
     app.config['OPENAPI_SWAGGER_UI_PATH'] = '/swagger'
     app.config['OPENAPI_SWAGGER_UI_URL'] = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist/'
+    app.config['OPENAPI_REDOC_PATH'] = '/redoc'
+    app.config['OPENAPI_REDOC_URL'] = 'https://cdn.jsdelivr.net/npm/redoc/dist/redoc.min.js'
 
     #database configuration
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('BI_DATABASE_URI', 'sqlite:///bi.db')
@@ -66,6 +68,7 @@ def create_app():
 
     # Blueprint registration
     api.register_blueprint(bp.IndexBlueprint)
+    api.register_blueprint(bp.CollaboratorBlueprint)
     api.register_blueprint(bp.UserBlueprint)
 
     return app

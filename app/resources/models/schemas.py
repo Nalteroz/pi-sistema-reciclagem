@@ -1,6 +1,5 @@
 from marshmallow import Schema, fields
-from marshmallow.exceptions import ValidationError
-from .basic import UserRoleEnum
+from .basic import UserRoleEnum, CollaboratorRoleEnum
 
 class BaseSchema(Schema):
     """
@@ -16,3 +15,12 @@ class UserSchema(BaseSchema):
     email = fields.Email(required=True)
     password = fields.String(required=True, load_only=True)
     role = fields.Enum(UserRoleEnum, by_value=False)
+
+class CollaboratorSchema(BaseSchema):
+    """
+        Schema for the collaborator model.
+    """
+    name = fields.String(required=True)
+    surname = fields.String(required=True)
+    date_of_birth = fields.Date(format='%d/%m/%Y', required=True)
+    role = fields.Enum(CollaboratorRoleEnum, by_value=False)

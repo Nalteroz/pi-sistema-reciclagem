@@ -1,5 +1,5 @@
 from ..data import system_db
-from .basic import BaseModel, IntEnumType, UserRoleEnum
+from .basic import BaseModel, UserRoleEnum
 
 class UserModel(BaseModel):
     """

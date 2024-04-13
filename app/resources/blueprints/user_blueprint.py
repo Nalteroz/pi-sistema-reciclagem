@@ -27,7 +27,7 @@ class RootUserMethodView(MethodView):
         users = UserModel.query.all()
         return users
 
-    # @jwt_required()
+    @jwt_required()
     @UserBlueprint.arguments(UserSchema)
     @UserBlueprint.response(201, UserSchema)
     def post(self, new_user):
@@ -66,27 +66,6 @@ class SingleUserMethod(MethodView):
         user = UserModel.query.get(user_id)
         if not user:
             abort(404, message='User not found.')
-
-        return user
-    
-    @jwt_required()
-    @UserBlueprint.response(200, UserSchema)
-    def put(self, user_id):
-        """
-            Reactivate a user by id.
-        """
-        if current_user.role != UserRoleEnum.ADMIN:
-            abort(403, message='You are not an admin, or are not allowed to update this user.')
-
-        user = UserModel.query.get(user_id)
-        if not user:
-            abort(404, message='User not found.')
-
-        user.deleted_at = None
-        user.deleted_by = None
-        user.updated_by = current_user.id
-        system_db.session.add(user)
-        system_db.session.commit()
 
         return user
     
@@ -148,8 +127,6 @@ class SingleUserMethod(MethodView):
         if not dbUser:
             abort(404, message='User not found.')
 
-        dbUser.deleted_by = current_user.id
-        dbUser.deleted_at = system_db.func.now()
         system_db.session.delete(dbUser)
         system_db.session.commit()
 

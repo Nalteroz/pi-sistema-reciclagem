@@ -1,3 +1,4 @@
+from .schemas import UserSchema, CollaboratorSchema
+from .basic import UserRoleEnum, CollaboratorRoleEnum
 from .user_model import UserModel
-from .schemas import UserSchema
-from .basic import UserRoleEnum
+from .collaborator_model import CollaboratorModel

@@ -1,2 +1,3 @@
 from .index_blueprint import IndexBlueprint
 from .user_blueprint import UserBlueprint
+from .collaborator_blueprint import CollaboratorBlueprint
