@@ -21,6 +21,6 @@ class UserModel(BaseModel):
     __table_args__ = {"schema": "security"}
 
     name = system_db.Column(system_db.String(255), nullable=False)
-    role = system_db.Column(IntEnumType(UserRoleEnum), nullable=False)
+    role = system_db.Column(system_db.Enum(UserRoleEnum), nullable=False)
     email = system_db.Column(system_db.String(255), nullable=False, unique=True)
     password = system_db.Column(system_db.LargeBinary(), nullable=False)

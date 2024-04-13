@@ -66,5 +66,6 @@ def create_app():
 
     # Blueprint registration
     api.register_blueprint(bp.IndexBlueprint)
+    api.register_blueprint(bp.UserBlueprint)
 
     return app
