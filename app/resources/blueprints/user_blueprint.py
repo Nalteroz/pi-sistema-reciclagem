@@ -1,7 +1,7 @@
 from flask import jsonify 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask_jwt_extended import jwt_required, create_access_token, current_user
+from flask_jwt_extended import jwt_required, create_access_token, set_access_cookies, set_refresh_cookies, current_user
 
 from bcrypt import hashpw, gensalt, checkpw
 
@@ -147,4 +147,10 @@ class LoginMethod(MethodView):
         if not checkpw(user['password'].encode('utf-8'), dbUser.password):
             abort(401, message='Invalid password.')
 
-        return jsonify({'access_token': create_access_token(identity=dbUser)})
+        acess_token = create_access_token(identity=dbUser)
+        refresh_token = create_access_token(identity=dbUser, fresh=True)
+        resp = jsonify({'login': True})
+        set_access_cookies(resp, acess_token)
+        set_refresh_cookies(resp, refresh_token)
+
+        return resp

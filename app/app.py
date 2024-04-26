@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from flask import Flask
+from flask import Flask, redirect
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_smorest import Api
@@ -46,6 +46,13 @@ def create_app():
 
     #JWT configuration
     app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
+    app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+    app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
+    app.config['JWT_REFRESH_COOKIE_PATH'] = '/token/refresh'
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+
+    #Set static folder
+    app.static_folder = 'resources/templates/static'
 
     #Database initialization
     system_db.init_app(app)
@@ -65,6 +72,10 @@ def create_app():
     def user_lookup_callback(_jwt_header, jwt_data):
         identity = jwt_data["sub"]
         return UserModel.query.filter_by(id=identity).one_or_none()
+    
+    @jwt.unauthorized_loader
+    def custom_unauthorized_response(_err):
+        return redirect('/login')
 
     # Blueprint registration
     api.register_blueprint(bp.IndexBlueprint)
