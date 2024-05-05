@@ -8,3 +8,10 @@ class TruckModel(BaseModel):
     name = system_db.Column(system_db.String(255), nullable=False)
     plate = system_db.Column(system_db.String(255), nullable=False, unique=True)
     capacity_kg = system_db.Column(system_db.Float(), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "name": "nome",
+            "plate": "placa",
+            "capacity_kg": "capacidade (kg)",
+        }

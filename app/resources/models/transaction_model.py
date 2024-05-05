@@ -9,3 +9,11 @@ class TransactionModel(BaseModel):
     client_id = system_db.Column(system_db.Integer, system_db.ForeignKey('operation.client.id'), nullable=False)
     collaborator_id = system_db.Column(system_db.Integer, system_db.ForeignKey('operation.collaborator.id'), nullable=False)
     value = system_db.Column(system_db.Float(), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "date": "data",
+            "client_id": "ID do cliente",
+            "collaborator_id": "ID do colaborador",
+            "value": "valor",
+        }

@@ -9,3 +9,11 @@ class ClientModel(BaseModel):
     phone_number = system_db.Column(system_db.String(255), nullable=False)
     email = system_db.Column(system_db.String(255), nullable=False)
     address = system_db.Column(system_db.String(255), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "name": "nome",
+            "phone_number": "telefone",
+            "email": "e-mail",
+            "address": "endereço",
+        }

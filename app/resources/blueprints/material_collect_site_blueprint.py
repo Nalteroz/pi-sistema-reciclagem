@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import MaterialCollectSiteModel, MaterialCollectSiteSchema, UserRoleEnum 
 
-MaterialCollectSiteBlueprint = Blueprint('material_collect_site', __name__, url_prefix='/material_collect_site')
+MaterialCollectSiteBlueprint = Blueprint('material_collect_site', __name__, url_prefix='/api/material_collect_site')
 
 @MaterialCollectSiteBlueprint.route('/')
 class RootMaterialCollectSiteMethodView(MethodView):

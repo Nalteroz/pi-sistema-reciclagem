@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import TruckModel, TruckSchema, UserRoleEnum 
 
-TruckBlueprint = Blueprint('truck', __name__, url_prefix='/truck')
+TruckBlueprint = Blueprint('truck', __name__, url_prefix='/api/truck')
 
 @TruckBlueprint.route('/')
 class RootTruckMethodView(MethodView):

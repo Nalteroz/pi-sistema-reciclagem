@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import TransactionModel, ClientModel, TransactionModel, TransactionSchema, UserRoleEnum 
 
-TransactionBlueprint = Blueprint('transaction', __name__, url_prefix='/transaction')
+TransactionBlueprint = Blueprint('transaction', __name__, url_prefix='/api/transaction')
 
 @TransactionBlueprint.route('/')
 class RootTransactionMethodView(MethodView):

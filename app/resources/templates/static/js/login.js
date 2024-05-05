@@ -2,11 +2,8 @@ function Login() {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
 
-    console.log(email);
-    console.log(password);
-
     // Try to login on /user/login endpoint
-    fetch('/user/login', {
+    fetch('api/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

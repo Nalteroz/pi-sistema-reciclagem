@@ -54,10 +54,10 @@ def upgrade():
     )
     op.create_table('truck',
     sa.PrimaryKeyConstraint('id'),
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('plate', sa.String(length=255), nullable=False),
     sa.Column('capacity_kg', sa.Float(), nullable=False),
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.UniqueConstraint('plate'),
     schema='operation'
     )

@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import ClientModel, ClientSchema, UserRoleEnum 
 
-ClientBlueprint = Blueprint('client', __name__, url_prefix='/client')
+ClientBlueprint = Blueprint('client', __name__, url_prefix='/api/client')
 
 @ClientBlueprint.route('/')
 class RootClientMethodView(MethodView):

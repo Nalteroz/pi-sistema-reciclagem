@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import StorageTransactionModel, TransactionModel, StorageHistoryModel, StorageTransactionSchema, UserRoleEnum 
 
-StorageTransactionBlueprint = Blueprint('storage_transaction', __name__, url_prefix='/storage_transaction')
+StorageTransactionBlueprint = Blueprint('storage_transaction', __name__, url_prefix='/api/storage_transaction')
 
 @StorageTransactionBlueprint.route('/')
 class RootStorageTransactionMethodView(MethodView):

@@ -24,3 +24,11 @@ class UserModel(BaseModel):
     role = system_db.Column(system_db.Enum(UserRoleEnum), nullable=False)
     email = system_db.Column(system_db.String(255), nullable=False, unique=True)
     password = system_db.Column(system_db.LargeBinary(), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "name": "nome",
+            "role": "cargo",
+            "email": "e-mail",
+            "password": "senha"
+        }

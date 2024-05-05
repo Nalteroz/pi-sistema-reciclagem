@@ -8,3 +8,10 @@ class MaterialCollectSiteModel(BaseModel):
     neighborhood = system_db.Column(system_db.String(255), nullable=False)
     city = system_db.Column(system_db.String(255), nullable=False)
     uf = system_db.Column(system_db.String(2), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "neighborhood": "bairro",
+            "city": "cidade",
+            "uf": "UF",
+        }

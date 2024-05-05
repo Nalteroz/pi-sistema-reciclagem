@@ -9,3 +9,11 @@ class MaterialTriageModel(BaseModel):
     collaborator_id = system_db.Column(system_db.Integer, system_db.ForeignKey('operation.collaborator.id'), nullable=False)
     material_collection_id = system_db.Column(system_db.Integer, system_db.ForeignKey('operation.material_collection.id'), nullable=False)
     storage_history_id = system_db.Column(system_db.Integer, system_db.ForeignKey('operation.storage_history.id'), nullable=False)
+
+    def GetColumnsNames():
+        return {
+            "date": "data",
+            "collaborator_id": "ID do colaborador",
+            "material_collection_id": "ID da coleta de material",
+            "storage_history_id": "ID do histórico do armazém",
+        }

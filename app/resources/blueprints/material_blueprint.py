@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import StorageHistoryModel, MaterialSchema, UserRoleEnum 
 
-MaterialBlueprint = Blueprint('material', __name__, url_prefix='/material')
+MaterialBlueprint = Blueprint('material', __name__, url_prefix='/api/material')
 
 @MaterialBlueprint.route('/')
 class RootMaterialMethodView(MethodView):
@@ -16,7 +16,7 @@ class RootMaterialMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get this information.')
 
-        materials = StorageHistoryModel.query.all()
+        materials = MaterialSchema.query.all()
         return materials
 
     @jwt_required()
@@ -26,7 +26,7 @@ class RootMaterialMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get materials information.')
 
-        materials = StorageHistoryModel(**new_material_data) 
+        materials = MaterialSchema(**new_material_data) 
 
         system_db.session.add(materials)
         system_db.session.commit()
@@ -38,7 +38,7 @@ class SingleMaterialMethodView(MethodView):
     @jwt_required()
     @MaterialBlueprint.response(200, MaterialSchema)
     def get(self, material_id):
-        material = StorageHistoryModel.query.get(material_id)
+        material = MaterialSchema.query.get(material_id)
         if not material:
             abort(404, message='material not found.')
 
@@ -51,7 +51,7 @@ class SingleMaterialMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get material information.')
 
-        db_material = StorageHistoryModel.query.get(material_id)
+        db_material = MaterialSchema.query.get(material_id)
         if not db_material:
             abort(404, message='material not found.')
 
@@ -75,7 +75,7 @@ class SingleMaterialMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get material information.')
 
-        db_material = StorageHistoryModel.query.get(material_id)
+        db_material = MaterialSchema.query.get(material_id)
         if not db_material:
             abort(404, message='material not found.')
 

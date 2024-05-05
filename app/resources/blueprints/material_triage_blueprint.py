@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, current_user
 from resources.data import system_db
 from resources.models import MaterialTriageModel, TransactionModel, MaterialCollectionModel, StorageTransactionModel, MaterialTriageSchema, UserRoleEnum 
 
-MaterialTriageBlueprint = Blueprint('material_triage', __name__, url_prefix='/material_triage')
+MaterialTriageBlueprint = Blueprint('material_triage', __name__, url_prefix='/api/material_triage')
 
 @MaterialTriageBlueprint.route('/')
 class RootMaterialTriageMethodView(MethodView):

@@ -8,7 +8,7 @@ from bcrypt import hashpw, gensalt, checkpw
 from resources.data import system_db
 from resources.models import UserModel, UserSchema, UserRoleEnum
 
-UserBlueprint = Blueprint('user', __name__, url_prefix='/user')
+UserBlueprint = Blueprint('user', __name__, url_prefix='/api/user')
 
 @UserBlueprint.route('/')
 class RootUserMethodView(MethodView):
@@ -147,10 +147,27 @@ class LoginMethod(MethodView):
         if not checkpw(user['password'].encode('utf-8'), dbUser.password):
             abort(401, message='Invalid password.')
 
-        acess_token = create_access_token(identity=dbUser)
+        acess_token = create_access_token(identity=dbUser, expires_delta=False)
         refresh_token = create_access_token(identity=dbUser, fresh=True)
         resp = jsonify({'login': True})
         set_access_cookies(resp, acess_token)
         set_refresh_cookies(resp, refresh_token)
 
         return resp
+    
+@UserBlueprint.route('/refreshtoken')
+class RefreshTokenMethod(MethodView):
+    @jwt_required(refresh=True)
+    @UserBlueprint.response(200, "Successfully refreshed token.")
+    def post(self):
+        """
+            Refresh token procedure.
+        """
+        # Create the new access token
+        access_token = create_access_token(identity=current_user)
+
+        # Set the JWT access cookie in the response
+        resp = jsonify({'refresh': True})
+        set_access_cookies(resp, access_token)
+        return resp
+    
