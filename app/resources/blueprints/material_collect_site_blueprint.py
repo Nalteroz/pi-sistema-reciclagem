@@ -26,7 +26,7 @@ class RootMaterialCollectSiteMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get material_collect_sites information.')
 
-        if MaterialCollectSiteModel.query.filter_by(name=new_material_collect_site_data['neighborhood'], surname = new_material_collect_site_data['city']).first():
+        if MaterialCollectSiteModel.query.filter_by(neighborhood=new_material_collect_site_data['neighborhood'], city = new_material_collect_site_data['city']).first():
             abort(409, message='Element already exists. If you want to reactivate and you are an admin, update the element instead.')
 
         material_collect_sites = MaterialCollectSiteModel(**new_material_collect_site_data) 
