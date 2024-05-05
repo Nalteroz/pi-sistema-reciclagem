@@ -1,4 +1,15 @@
-function CreateElement() {
+function RefineData(data) {
+    var new_data = Object.keys(data).filter(objKey =>
+        objKey !== 'id').reduce((newObj, key) =>
+        {
+            newObj[key] = data[key];
+            return newObj;
+        }, {}
+    );
+    return new_data;
+}
+
+function UpdateElement() {
     var inputs = document.getElementsByClassName('form-input');
 
     var data_payload = {};
@@ -9,15 +20,16 @@ function CreateElement() {
             data_payload[inputs[i].name] = inputs[i].value.replace(',', '.');
         }
     }
-    fetch(DATA_PATH, {
-        method: 'POST',
+    fetch(DATA_PATH + '/' + data_payload['id'], {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data_payload)
+        body: JSON.stringify(RefineData(data_payload))
     })
     .then((response) => { 
-        if (response.status == 201) {
+        console.log(response);
+        if (response.status == 200) {
             window.location.href = ('/element/' + ELEMENT);
         } else {
             document.getElementById('error-message').innerHTML = 'Dados inválidos';

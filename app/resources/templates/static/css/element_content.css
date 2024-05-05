@@ -1,9 +1,10 @@
-section {
-    margin-top: 20px;
+#operation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 #operation-buttons button{
-    margin-right: 20px;
     padding: 10px;
     width: 150px;
 }
