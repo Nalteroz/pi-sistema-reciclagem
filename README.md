@@ -11,3 +11,4 @@ Para executar, primeiro crie um arquivo *.env* com o URI do banco Postgre e o se
 BI_DATABASE_URI = postgresql://<user>:<password>@<host>:<port>/<db>
 JWT_SECRET_KEY=<sha256 secret>
 ```
+Após configurar o arquivo, execute no terminal `flask db upgrade` para executar as *migrations* do banco. Em seguida basta executar o código com `flask run`.
