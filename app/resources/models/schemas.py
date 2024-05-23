@@ -76,7 +76,7 @@ class MaterialTriageSchema(BaseSchema):
     material_collection_id = fields.Integer(required=True)
     storage_history_id = fields.Integer(required=True)
 
-class StorageTransactionSchema(BaseSchema):
+class StorageHistorySchema(BaseSchema):
     """
         Schema for the storage history model.
     """

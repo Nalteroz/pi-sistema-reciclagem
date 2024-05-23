@@ -4,14 +4,14 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required, current_user
 
 from resources.data import system_db
-from resources.models import StorageTransactionModel, TransactionModel, StorageHistoryModel, MaterialModel, StorageTransactionSchema, UserRoleEnum 
+from resources.models import CollaboratorModel, StorageHistoryModel, MaterialModel, StorageHistorySchema, UserRoleEnum 
 
 StorageHistoryBlueprint = Blueprint('storage_history', __name__, url_prefix='/api/storage_history')
 
 @StorageHistoryBlueprint.route('/')
 class RootStorageHistoryMethodView(MethodView):
     @jwt_required()
-    @StorageHistoryBlueprint.response(200, StorageTransactionSchema(many=True))
+    @StorageHistoryBlueprint.response(200, StorageHistorySchema(many=True))
     def get(self):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get this information.')
@@ -20,13 +20,13 @@ class RootStorageHistoryMethodView(MethodView):
         return storage_historys
 
     @jwt_required()
-    @StorageHistoryBlueprint.arguments(StorageTransactionSchema)
-    @StorageHistoryBlueprint.response(201, StorageTransactionSchema)
+    @StorageHistoryBlueprint.arguments(StorageHistorySchema)
+    @StorageHistoryBlueprint.response(201, StorageHistorySchema)
     def post(self, new_storage_history_data):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get storage_historys information.')
 
-        refered_collaborator = TransactionModel.query.get(new_storage_history_data['collaborator_id'])
+        refered_collaborator = CollaboratorModel.query.get(new_storage_history_data['collaborator_id'])
         if not refered_collaborator:
             abort(404, message='collaborator not found.')
 
@@ -44,7 +44,7 @@ class RootStorageHistoryMethodView(MethodView):
 @StorageHistoryBlueprint.route('/<int:storage_history_id>')
 class SingleStorageHistoryMethodView(MethodView):
     @jwt_required()
-    @StorageHistoryBlueprint.response(200, StorageTransactionSchema)
+    @StorageHistoryBlueprint.response(200, StorageHistorySchema)
     def get(self, storage_history_id):
         storage_history = StorageHistoryModel.query.get(storage_history_id)
         if not storage_history:
@@ -53,8 +53,8 @@ class SingleStorageHistoryMethodView(MethodView):
         return storage_history
 
     @jwt_required()
-    @StorageHistoryBlueprint.arguments(StorageTransactionSchema)
-    @StorageHistoryBlueprint.response(200, StorageTransactionSchema)
+    @StorageHistoryBlueprint.arguments(StorageHistorySchema)
+    @StorageHistoryBlueprint.response(200, StorageHistorySchema)
     def put(self, storage_history_data, storage_history_id):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get storage_history information.')
@@ -84,7 +84,7 @@ class SingleStorageHistoryMethodView(MethodView):
         return storage_history_data
 
     @jwt_required()
-    @StorageHistoryBlueprint.response(201, StorageTransactionSchema)
+    @StorageHistoryBlueprint.response(201, StorageHistorySchema)
     def delete(self, storage_history_id):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get storage_history information.')

@@ -4,7 +4,7 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required, current_user
 
 from resources.data import system_db
-from resources.models import TransactionModel, ClientModel, TransactionModel, TransactionSchema, UserRoleEnum 
+from resources.models import TransactionModel, ClientModel, CollaboratorModel, TransactionSchema, UserRoleEnum 
 
 TransactionBlueprint = Blueprint('transaction', __name__, url_prefix='/api/transaction')
 
@@ -26,7 +26,7 @@ class RootTransactionMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get transactions information.')
 
-        refered_collaborator = TransactionModel.query.get(new_transaction_data['collaborator_id'])
+        refered_collaborator = CollaboratorModel.query.get(new_transaction_data['collaborator_id'])
         if not refered_collaborator:
             abort(404, message='collaborator not found.')
 

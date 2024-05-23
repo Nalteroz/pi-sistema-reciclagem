@@ -4,7 +4,7 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required, current_user
 
 from resources.data import system_db
-from resources.models import MaterialTriageModel, TransactionModel, MaterialCollectionModel, StorageTransactionModel, MaterialTriageSchema, UserRoleEnum 
+from resources.models import MaterialTriageModel, CollaboratorModel, MaterialCollectionModel, StorageHistoryModel, MaterialTriageSchema, UserRoleEnum 
 
 MaterialTriageBlueprint = Blueprint('material_triage', __name__, url_prefix='/api/material_triage')
 
@@ -26,7 +26,7 @@ class RootMaterialTriageMethodView(MethodView):
         if current_user.role != UserRoleEnum.ADMIN:
             abort(403, message='You are not an admin, or are not allowed get material_triage information.')
 
-        refered_collaborator = TransactionModel.query.get(new_material_triage_data['collaborator_id'])
+        refered_collaborator = CollaboratorModel.query.get(new_material_triage_data['collaborator_id'])
         if not refered_collaborator:
             abort(404, message='collaborator not found.')
 
@@ -34,7 +34,7 @@ class RootMaterialTriageMethodView(MethodView):
         if not refered_material_collection:
             abort(404, message='material collection not found.')
 
-        refered_storage_history = StorageTransactionModel.query.get(new_material_triage_data['storage_history_id'])
+        refered_storage_history = StorageHistoryModel.query.get(new_material_triage_data['storage_history_id'])
         if not refered_storage_history:
             abort(404, message='storage history not found.')
 

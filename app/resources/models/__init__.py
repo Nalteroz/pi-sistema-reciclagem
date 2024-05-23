@@ -1,4 +1,4 @@
-from .schemas import UserSchema, CollaboratorSchema, ClientSchema, TruckSchema, MaterialSchema, MaterialCollectSiteSchema, MaterialCollectionSchema, MaterialTriageSchema, StorageTransactionSchema, StorageTransactionSchema, TransactionSchema
+from .schemas import UserSchema, CollaboratorSchema, ClientSchema, TruckSchema, MaterialSchema, MaterialCollectSiteSchema, MaterialCollectionSchema, MaterialTriageSchema, StorageTransactionSchema, StorageHistorySchema, TransactionSchema
 from .basic import UserRoleEnum, CollaboratorRoleEnum
 from .user_model import UserModel
 from .collaborator_model import CollaboratorModel
